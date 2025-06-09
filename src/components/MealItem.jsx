@@ -9,11 +9,15 @@ export default function MealItem({ meal }) {
   const addToCartHandler = () => {
     cartCtx.addItem(meal);
   };
-
+  // Determine the image URL based on environment
+  const imageUrl = import.meta.env.PROD
+    ? `https://web-production-fbd2a.up.railway.app/${meal.image}`
+    : `http://localhost:3000/${meal.image}`;
+    
   return (
     <li className="meal-item">
       <article>
-        <img src={`http://localhost:3000/${meal.image}`} alt="" />
+        <img src={imageUrl} alt={meal.name} />
         <div>
           <h3>{meal.name}</h3>
           <p className="meal-item-price">

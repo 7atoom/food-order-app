@@ -1,13 +1,17 @@
 import { useCallback, useEffect, useState } from "react";
 
 async function sendHttpRequest(url, config) {
-  // For GitHub Pages deployment, you might need to adjust the URL
-  // This is a simple example - you'd probably want to use environment variables
+  // For GitHub Pages deployment, adjust the URL to point to our deployed backend
   const API_URL = import.meta.env.PROD
-    ? "https://your-api-server-url.com" // Replace with your actual API server URL in production
-    : url; // Use the provided URL for development
+    ? "https://web-production-fbd2a.up.railway.app" // Our deployed Railway API URL
+    : url; // Use localhost URL for development
 
-  const response = await fetch(url, config);
+  // If in production, modify the URL to use the deployed API
+  const requestUrl = import.meta.env.PROD
+    ? `${API_URL}${url.substring(url.lastIndexOf("/"))}`
+    : url;
+
+  const response = await fetch(requestUrl, config);
 
   const resData = await response.json();
 
