@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 
 async function sendHttpRequest(url, config) {
+  // For GitHub Pages deployment, you might need to adjust the URL
+  // This is a simple example - you'd probably want to use environment variables
+  const API_URL = import.meta.env.PROD 
+    ? 'https://your-api-server-url.com'  // Replace with your actual API server URL in production
+    : url;  // Use the provided URL for development
+    
   const response = await fetch(url, config);
 
   const resData = await response.json();
