@@ -1,19 +1,19 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 async function sendHttpRequest(url, config) {
   // For GitHub Pages deployment, you might need to adjust the URL
   // This is a simple example - you'd probably want to use environment variables
-  const API_URL = import.meta.env.PROD 
-    ? 'https://your-api-server-url.com'  // Replace with your actual API server URL in production
-    : url;  // Use the provided URL for development
-    
+  const API_URL = import.meta.env.PROD
+    ? "https://your-api-server-url.com" // Replace with your actual API server URL in production
+    : url; // Use the provided URL for development
+
   const response = await fetch(url, config);
 
   const resData = await response.json();
 
   if (!response.ok) {
     throw new Error(
-      resData.message || 'Something went wrong, failed to send request.'
+      resData.message || "Something went wrong, failed to send request."
     );
   }
 
@@ -36,7 +36,7 @@ export default function useHttp(url, config, initialData) {
         const resData = await sendHttpRequest(url, { ...config, body: data });
         setData(resData);
       } catch (error) {
-        setError(error.message || 'Something went wrong!');
+        setError(error.message || "Something went wrong!");
       }
       setIsLoading(false);
     },
@@ -44,7 +44,7 @@ export default function useHttp(url, config, initialData) {
   );
 
   useEffect(() => {
-    if ((config && (config.method === 'GET' || !config.method)) || !config) {
+    if ((config && (config.method === "GET" || !config.method)) || !config) {
       sendRequest();
     }
   }, [sendRequest, config]);
@@ -54,6 +54,6 @@ export default function useHttp(url, config, initialData) {
     isLoading,
     error,
     sendRequest,
-    clearData
+    clearData,
   };
 }
